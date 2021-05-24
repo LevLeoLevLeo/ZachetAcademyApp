@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZachetAcademyApp.Class;
 
 namespace ZachetAcademyApp.Pages
 {
@@ -23,6 +24,18 @@ namespace ZachetAcademyApp.Pages
         public PageListStudent()
         {
             InitializeComponent();
+
+            Cmb_ChoiseGroup.SelectedValuePath = "Id";
+            Cmb_ChoiseGroup.DisplayMemberPath = "NameGroup";
+            Cmb_ChoiseGroup.ItemsSource = ClassDataBase.DBZachetStudents.Group.ToList();
+
+        }
+
+        private void Btn_Search_Click(object sender, RoutedEventArgs e)
+        {
+            int x = Convert.ToInt32(Cmb_ChoiseGroup.SelectedValue);
+            ListStudent.ItemsSource = ClassDataBase.DBZachetStudents.Student.Where(student => student.IdGroup == x).ToList();
+
         }
     }
 }

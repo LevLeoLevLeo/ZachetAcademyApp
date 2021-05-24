@@ -35,7 +35,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0">
 
-                <TextBlock Text="Студент:" FontSize="15pt" HorizontalAlignment="Left"/>
+                <TextBlock Text="Оценка:" FontSize="15pt" HorizontalAlignment="Left"/>
                 <TextBox Name="Txb_Evaluation" Margin="10 0 0 0" Width="150px"/>
 
             </StackPanel>
