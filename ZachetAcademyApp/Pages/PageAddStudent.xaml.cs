@@ -58,7 +58,7 @@ namespace ZachetAcademyApp.Pages
 
             ClassDataBase.DBZachetStudents.Student.Add(studentobj);
             ClassDataBase.DBZachetStudents.SaveChanges();
-            MessageBox.Show("Заказ создан!", "Заказ", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Студент добавлен!", "Студент", MessageBoxButton.OK, MessageBoxImage.Information);
 
         }
     }
