@@ -24,6 +24,8 @@ namespace ZachetAcademyApp.Pages
         public PageListEvaluation()
         {
             InitializeComponent();
+            ListEvaluation.ItemsSource = ClassDataBase.DBZachetStudents.Evaluation.Where(x => x.IdStudent == ClassDataBase.obj).ToList();
+
         }
 
         private void Btn_Print_Click(object sender, RoutedEventArgs e)

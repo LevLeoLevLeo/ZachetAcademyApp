@@ -42,15 +42,9 @@ namespace ZachetAcademyApp.Pages
 
         private void Btn_Evaluation_Click(object sender, RoutedEventArgs e)
         {
-
-            if (ListStudent.SelectedItems.Count > 0)
-            {
-                for (int i = 0; i < ListStudent.SelectedItems.Count; i++)
-                {
-                    Class.ClassDataBase.obj = ListStudent.SelectedItems[i];
-
+            ListStudent.SelectedValuePath = "Id";
+            ClassDataBase.obj = Convert.ToInt32(ListStudent.SelectedValue);
+            ClassFrame.FrmMain.Navigate(new PageListEvaluation());
         }
-                ClassFrame.FrmMain.Navigate(new PageListEvaluation());
             }
-        } } 
-}
+        } 
