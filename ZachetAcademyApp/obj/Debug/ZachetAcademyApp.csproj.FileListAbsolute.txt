@@ -58,3 +58,6 @@ C:\Users\LevLeo\Desktop\ZachetAcademyApp\ZachetAcademyApp\obj\Debug\ZachetAcadem
 C:\Users\LevLeo\Desktop\ZachetAcademyApp\ZachetAcademyApp\obj\Debug\ZachetAcademyApp.csproj.CopyComplete
 C:\Users\LevLeo\Desktop\ZachetAcademyApp\ZachetAcademyApp\obj\Debug\ZachetAcademyApp.exe
 C:\Users\LevLeo\Desktop\ZachetAcademyApp\ZachetAcademyApp\obj\Debug\ZachetAcademyApp.pdb
+C:\Users\LevLeo\Desktop\ZachetAcademyApp\ZachetAcademyApp\obj\Debug\Pages\PageListEvaluation.g.cs
+C:\Users\LevLeo\Desktop\ZachetAcademyApp\ZachetAcademyApp\obj\Debug\Pages\PageListEvaluation.baml
+C:\Users\LevLeo\Desktop\ZachetAcademyApp\ZachetAcademyApp\bin\Debug\ru\EntityFramework.resources.dll

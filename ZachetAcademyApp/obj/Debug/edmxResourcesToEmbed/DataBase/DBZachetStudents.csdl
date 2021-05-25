@@ -6,6 +6,8 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="NameDiscipline" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdTeacher" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Teacher" Relationship="Self.FK_Discipline_Teacher" FromRole="Discipline" ToRole="Teacher" />
     <NavigationProperty Name="Evaluation" Relationship="Self.FK_Evaluation_Discipline" FromRole="Discipline" ToRole="Evaluation" />
   </EntityType>
   <EntityType Name="Evaluation">
@@ -45,7 +47,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="IdSpecialization" Type="Int32" Nullable="false" />
-    <Property Name="Year" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
     <Property Name="IdTrainingForm" Type="Int32" Nullable="false" />
     <Property Name="IdGroup" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Evaluation" Relationship="Self.FK_Evaluation_Student" FromRole="Student" ToRole="Evaluation" />
@@ -63,6 +65,14 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Discipline" Relationship="Self.FK_Discipline_Teacher" FromRole="Teacher" ToRole="Discipline" />
+  </EntityType>
   <EntityType Name="TrainingForm">
     <Key>
       <PropertyRef Name="Id" />
@@ -71,6 +81,18 @@
     <Property Name="NameTrainingForm" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Student" Relationship="Self.FK_Student_TrainingForm" FromRole="TrainingForm" ToRole="Student" />
   </EntityType>
+  <Association Name="FK_Discipline_Teacher">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Discipline" Type="Self.Discipline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Discipline">
+        <PropertyRef Name="IdTeacher" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Evaluation_Discipline">
     <End Role="Discipline" Type="Self.Discipline" Multiplicity="1" />
     <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
@@ -150,7 +172,12 @@
     <EntitySet Name="Specialization" EntityType="Self.Specialization" />
     <EntitySet Name="Student" EntityType="Self.Student" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Teacher" EntityType="Self.Teacher" />
     <EntitySet Name="TrainingForm" EntityType="Self.TrainingForm" />
+    <AssociationSet Name="FK_Discipline_Teacher" Association="Self.FK_Discipline_Teacher">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="Discipline" EntitySet="Discipline" />
+    </AssociationSet>
     <AssociationSet Name="FK_Evaluation_Discipline" Association="Self.FK_Evaluation_Discipline">
       <End Role="Discipline" EntitySet="Discipline" />
       <End Role="Evaluation" EntitySet="Evaluation" />

@@ -51,7 +51,7 @@ namespace ZachetAcademyApp.Pages
 
                 Name = Txb_NameStudent.Text,
                 Specialization = Cmd_Specialization.SelectedItem as Specialization,
-                Year = Convert.ToInt32(Txb_Year.Text),
+                Date = Dtp_Year.SelectedDate.Value,
                 TrainingForm = Cmd_TrainingForm.SelectedItem as TrainingForm,
                 Group = Cmd_NameGroup.SelectedItem as Group,
             };

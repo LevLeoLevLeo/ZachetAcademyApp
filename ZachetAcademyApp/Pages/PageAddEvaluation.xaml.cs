@@ -70,5 +70,13 @@ namespace ZachetAcademyApp.Pages
 
             }
         }
+
+        private void Cmb_Group_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            int x = Convert.ToInt32(Cmb_Group.SelectedValue);
+            Cmb_Student.ItemsSource = ClassDataBase.DBZachetStudents.Student.Where(y => y.IdGroup == x).ToList();
+
+        }
     }
 }

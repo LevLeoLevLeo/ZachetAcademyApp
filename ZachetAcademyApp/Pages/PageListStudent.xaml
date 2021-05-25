@@ -21,18 +21,24 @@
 
         <StackPanel Style="{StaticResource StpCenter}">
 
-            <DataGrid Name="ListStudent" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid Name="ListStudent" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsReadOnly="True">
 
                 <DataGrid.Columns>
 
                     <DataGridTextColumn Header="Студент" Width="*" Binding="{Binding Name}"/>
-
+                    <DataGridTemplateColumn Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Оценки" Name="Btn_Evaluation" Click="Btn_Evaluation_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                
+
             </DataGrid>
-            
+
         </StackPanel>
-        
+
     </Grid>
     
 </Page>

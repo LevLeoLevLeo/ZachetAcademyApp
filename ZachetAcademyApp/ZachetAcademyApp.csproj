@@ -113,6 +113,9 @@
     <Compile Include="DataBase\sysdiagrams.cs">
       <DependentUpon>DBZachetStudents.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataBase\Teacher.cs">
+      <DependentUpon>DBZachetStudents.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\TrainingForm.cs">
       <DependentUpon>DBZachetStudents.tt</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PageAddStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PageListEvaluation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +150,9 @@
     </Compile>
     <Compile Include="Pages\PageAddStudent.xaml.cs">
       <DependentUpon>PageAddStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageListEvaluation.xaml.cs">
+      <DependentUpon>PageListEvaluation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageListStudent.xaml.cs">
       <DependentUpon>PageListStudent.xaml</DependentUpon>
@@ -184,6 +194,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="DataBase\DBZachetStudents.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DBZachetStudents.edmx</DependentUpon>
@@ -194,9 +207,6 @@
       <DependentUpon>DBZachetStudents.edmx</DependentUpon>
       <LastGenOutput>DBZachetStudents.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

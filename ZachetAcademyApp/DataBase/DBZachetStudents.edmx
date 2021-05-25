@@ -4,13 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ZachetStudentsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище ZachetStudentsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Discipline">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NameDiscipline" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdTeacher" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Evaluation">
           <Key>
@@ -43,7 +44,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="IdSpecialization" Type="int" Nullable="false" />
-          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" />
           <Property Name="IdTrainingForm" Type="int" Nullable="false" />
           <Property Name="IdGroup" Type="int" Nullable="false" />
         </EntityType>
@@ -57,6 +58,13 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="TrainingForm">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,6 +72,18 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NameTrainingForm" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Discipline_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Discipline" Type="Self.Discipline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Discipline">
+              <PropertyRef Name="IdTeacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Evaluation_Discipline">
           <End Role="Discipline" Type="Self.Discipline" Multiplicity="1" />
           <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
@@ -167,14 +187,19 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="ZachetStudentsModelStoreContainer">
+        <EntityContainer Name="Хранилище ZachetStudentsModelContainer">
           <EntitySet Name="Discipline" EntityType="Self.Discipline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Evaluation" EntityType="Self.Evaluation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialization" EntityType="Self.Specialization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TrainingForm" EntityType="Self.TrainingForm" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Discipline_Teacher" Association="Self.FK_Discipline_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Discipline" EntitySet="Discipline" />
+          </AssociationSet>
           <AssociationSet Name="FK_Evaluation_Discipline" Association="Self.FK_Evaluation_Discipline">
             <End Role="Discipline" EntitySet="Discipline" />
             <End Role="Evaluation" EntitySet="Evaluation" />
@@ -211,6 +236,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NameDiscipline" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdTeacher" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Discipline_Teacher" FromRole="Discipline" ToRole="Teacher" />
           <NavigationProperty Name="Evaluation" Relationship="Self.FK_Evaluation_Discipline" FromRole="Discipline" ToRole="Evaluation" />
         </EntityType>
         <EntityType Name="Evaluation">
@@ -250,7 +277,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdSpecialization" Type="Int32" Nullable="false" />
-          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="IdTrainingForm" Type="Int32" Nullable="false" />
           <Property Name="IdGroup" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Evaluation" Relationship="Self.FK_Evaluation_Student" FromRole="Student" ToRole="Evaluation" />
@@ -268,6 +295,14 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Discipline" Relationship="Self.FK_Discipline_Teacher" FromRole="Teacher" ToRole="Discipline" />
+        </EntityType>
         <EntityType Name="TrainingForm">
           <Key>
             <PropertyRef Name="Id" />
@@ -276,6 +311,18 @@
           <Property Name="NameTrainingForm" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Student" Relationship="Self.FK_Student_TrainingForm" FromRole="TrainingForm" ToRole="Student" />
         </EntityType>
+        <Association Name="FK_Discipline_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Discipline" Type="Self.Discipline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Discipline">
+              <PropertyRef Name="IdTeacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Evaluation_Discipline">
           <End Role="Discipline" Type="Self.Discipline" Multiplicity="1" />
           <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
@@ -355,7 +402,12 @@
           <EntitySet Name="Specialization" EntityType="Self.Specialization" />
           <EntitySet Name="Student" EntityType="Self.Student" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" />
           <EntitySet Name="TrainingForm" EntityType="Self.TrainingForm" />
+          <AssociationSet Name="FK_Discipline_Teacher" Association="Self.FK_Discipline_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Discipline" EntitySet="Discipline" />
+          </AssociationSet>
           <AssociationSet Name="FK_Evaluation_Discipline" Association="Self.FK_Evaluation_Discipline">
             <End Role="Discipline" EntitySet="Discipline" />
             <End Role="Evaluation" EntitySet="Evaluation" />
@@ -427,12 +479,13 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ZachetStudentsModelStoreContainer" CdmEntityContainer="ZachetStudentsEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ZachetStudentsModelContainer" CdmEntityContainer="ZachetStudentsEntities">
           <EntitySetMapping Name="Discipline">
             <EntityTypeMapping TypeName="ZachetStudentsModel.Discipline">
               <MappingFragment StoreEntitySet="Discipline">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NameDiscipline" ColumnName="NameDiscipline" />
+                <ScalarProperty Name="IdTeacher" ColumnName="IdTeacher" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -469,7 +522,7 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="IdSpecialization" ColumnName="IdSpecialization" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="IdTrainingForm" ColumnName="IdTrainingForm" />
                 <ScalarProperty Name="IdGroup" ColumnName="IdGroup" />
               </MappingFragment>
@@ -486,6 +539,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Teacher">
+            <EntityTypeMapping TypeName="ZachetStudentsModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TrainingForm">
             <EntityTypeMapping TypeName="ZachetStudentsModel.TrainingForm">
               <MappingFragment StoreEntitySet="TrainingForm">
@@ -494,10 +555,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ZachetStudentsModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ZachetStudentsModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ZachetStudentsModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ZachetStudentsModel.Store.sp_helpdiagramdefinition">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище ZachetStudentsModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище ZachetStudentsModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище ZachetStudentsModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище ZachetStudentsModel.sp_helpdiagramdefinition">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ZachetStudentsModel.sp_helpdiagramdefinition_Result">
                 <ScalarProperty Name="version" ColumnName="version" />
@@ -505,7 +566,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ZachetStudentsModel.Store.sp_helpdiagrams">
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище ZachetStudentsModel.sp_helpdiagrams">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ZachetStudentsModel.sp_helpdiagrams_Result">
                 <ScalarProperty Name="Database" ColumnName="Database" />
@@ -516,8 +577,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ZachetStudentsModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ZachetStudentsModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище ZachetStudentsModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище ZachetStudentsModel.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -535,7 +596,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

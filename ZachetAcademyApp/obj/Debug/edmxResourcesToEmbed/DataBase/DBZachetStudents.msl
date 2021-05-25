@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ZachetStudentsModelStoreContainer" CdmEntityContainer="ZachetStudentsEntities">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ZachetStudentsModelContainer" CdmEntityContainer="ZachetStudentsEntities">
     <EntitySetMapping Name="Discipline">
       <EntityTypeMapping TypeName="ZachetStudentsModel.Discipline">
         <MappingFragment StoreEntitySet="Discipline">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="NameDiscipline" ColumnName="NameDiscipline" />
+          <ScalarProperty Name="IdTeacher" ColumnName="IdTeacher" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -42,7 +43,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="IdSpecialization" ColumnName="IdSpecialization" />
-          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="IdTrainingForm" ColumnName="IdTrainingForm" />
           <ScalarProperty Name="IdGroup" ColumnName="IdGroup" />
         </MappingFragment>
@@ -59,6 +60,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Teacher">
+      <EntityTypeMapping TypeName="ZachetStudentsModel.Teacher">
+        <MappingFragment StoreEntitySet="Teacher">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TrainingForm">
       <EntityTypeMapping TypeName="ZachetStudentsModel.TrainingForm">
         <MappingFragment StoreEntitySet="TrainingForm">
@@ -67,10 +76,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="ZachetStudentsModel.Store.sp_alterdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="ZachetStudentsModel.Store.sp_creatediagram" />
-    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="ZachetStudentsModel.Store.sp_dropdiagram" />
-    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="ZachetStudentsModel.Store.sp_helpdiagramdefinition">
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище ZachetStudentsModel.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище ZachetStudentsModel.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище ZachetStudentsModel.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище ZachetStudentsModel.sp_helpdiagramdefinition">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ZachetStudentsModel.sp_helpdiagramdefinition_Result">
           <ScalarProperty Name="version" ColumnName="version" />
@@ -78,7 +87,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="ZachetStudentsModel.Store.sp_helpdiagrams">
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище ZachetStudentsModel.sp_helpdiagrams">
       <ResultMapping>
         <ComplexTypeMapping TypeName="ZachetStudentsModel.sp_helpdiagrams_Result">
           <ScalarProperty Name="Database" ColumnName="Database" />
@@ -89,7 +98,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ZachetStudentsModel.Store.sp_renamediagram" />
-    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ZachetStudentsModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище ZachetStudentsModel.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище ZachetStudentsModel.sp_upgraddiagrams" />
   </EntityContainerMapping>
 </Mapping>

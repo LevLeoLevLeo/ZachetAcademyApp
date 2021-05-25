@@ -33,9 +33,24 @@ namespace ZachetAcademyApp.Pages
 
         private void Btn_Search_Click(object sender, RoutedEventArgs e)
         {
+
+            ListStudent.SelectedValuePath = "Id";
             int x = Convert.ToInt32(Cmb_ChoiseGroup.SelectedValue);
             ListStudent.ItemsSource = ClassDataBase.DBZachetStudents.Student.Where(student => student.IdGroup == x).ToList();
 
         }
-    }
+
+        private void Btn_Evaluation_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (ListStudent.SelectedItems.Count > 0)
+            {
+                for (int i = 0; i < ListStudent.SelectedItems.Count; i++)
+                {
+                    Class.ClassDataBase.obj = ListStudent.SelectedItems[i];
+
+        }
+                ClassFrame.FrmMain.Navigate(new PageListEvaluation());
+            }
+        } } 
 }

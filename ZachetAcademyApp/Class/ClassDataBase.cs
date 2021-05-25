@@ -11,6 +11,7 @@ namespace ZachetAcademyApp.Class
     {
 
         public static ZachetStudentsEntities DBZachetStudents;
+        public static Object obj;
 
     }
 }

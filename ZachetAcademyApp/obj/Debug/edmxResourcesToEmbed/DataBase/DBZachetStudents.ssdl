@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="ZachetStudentsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="Хранилище ZachetStudentsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Discipline">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NameDiscipline" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdTeacher" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Evaluation">
     <Key>
@@ -38,7 +39,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="IdSpecialization" Type="int" Nullable="false" />
-    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Date" Type="date" />
     <Property Name="IdTrainingForm" Type="int" Nullable="false" />
     <Property Name="IdGroup" Type="int" Nullable="false" />
   </EntityType>
@@ -52,6 +53,13 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
   <EntityType Name="TrainingForm">
     <Key>
       <PropertyRef Name="Id" />
@@ -59,6 +67,18 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NameTrainingForm" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <Association Name="FK_Discipline_Teacher">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+    <End Role="Discipline" Type="Self.Discipline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Discipline">
+        <PropertyRef Name="IdTeacher" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Evaluation_Discipline">
     <End Role="Discipline" Type="Self.Discipline" Multiplicity="1" />
     <End Role="Evaluation" Type="Self.Evaluation" Multiplicity="*" />
@@ -162,14 +182,19 @@
     <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <EntityContainer Name="ZachetStudentsModelStoreContainer">
+  <EntityContainer Name="Хранилище ZachetStudentsModelContainer">
     <EntitySet Name="Discipline" EntityType="Self.Discipline" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Evaluation" EntityType="Self.Evaluation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Specialization" EntityType="Self.Specialization" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TrainingForm" EntityType="Self.TrainingForm" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Discipline_Teacher" Association="Self.FK_Discipline_Teacher">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="Discipline" EntitySet="Discipline" />
+    </AssociationSet>
     <AssociationSet Name="FK_Evaluation_Discipline" Association="Self.FK_Evaluation_Discipline">
       <End Role="Discipline" EntitySet="Discipline" />
       <End Role="Evaluation" EntitySet="Evaluation" />
