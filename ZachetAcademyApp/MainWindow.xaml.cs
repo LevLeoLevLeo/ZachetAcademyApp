@@ -26,15 +26,15 @@ namespace ZachetAcademyApp
         public MainWindow()
         {
             InitializeComponent();
-            ClassDataBase.DBZachetStudents = new ZachetStudentsEntities();
-            ClassFrame.FrmMain = FrmMainWindow;
-            ClassFrame.BtnBack = Btn_Back;
-            ClassFrame.FrmMain.Navigate(new PageMain());
+            ClassDataBase.DBZachetStudents = new ZachetStudentsEntities(); //Запись сущности в класс
+            ClassFrame.FrmMain = FrmMainWindow; //Запись фрейма в класс
+            ClassFrame.BtnBack = Btn_Back; //Запись кнопки "наза"д в класс
+            FrmMainWindow.Navigate(new PageMain()); //Автоматический переход на главную страницу
         }
 
-        private void Btn_Back_Click(object sender, RoutedEventArgs e)
+        private void Btn_Back_Click(object sender, RoutedEventArgs e) //Собитие Click на кнопку "назад", которая скрывается после перехода, если назад больше перейти нельзя
         {
-            ClassFrame.FrmMain.GoBack();
+            ClassFrame.FrmMain.GoBack();        
             if (!ClassFrame.FrmMain.CanGoBack)
 
             {

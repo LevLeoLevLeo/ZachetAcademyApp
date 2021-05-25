@@ -25,7 +25,9 @@ namespace ZachetAcademyApp.Pages
         public PageAddStudent()
         {
             InitializeComponent();
-        
+
+            WindowTitle = "Добавление студента";
+
             Cmd_Specialization.SelectedValuePath = "Id";
             Cmd_Specialization.DisplayMemberPath = "NameSpecialization";
             Cmd_Specialization.ItemsSource = ClassDataBase.DBZachetStudents.Specialization.ToList();
@@ -44,22 +46,31 @@ namespace ZachetAcademyApp.Pages
 
         private void Btn_AddStudent_Click(object sender, RoutedEventArgs e)
         {
-
-            Student studentobj = new Student()
+            if (Cmd_NameGroup.SelectedItem == null || Cmd_Specialization.SelectedItem == null || Cmd_TrainingForm.SelectedItem == null || Dtp_Year.SelectedDate.Value == null || Txb_NameStudent.Text == null)
 
             {
 
-                Name = Txb_NameStudent.Text,
-                Specialization = Cmd_Specialization.SelectedItem as Specialization,
-                Date = Dtp_Year.SelectedDate.Value,
-                TrainingForm = Cmd_TrainingForm.SelectedItem as TrainingForm,
-                Group = Cmd_NameGroup.SelectedItem as Group,
-            };
+                MessageBox.Show("Вы что-то не выбрали", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
 
-            ClassDataBase.DBZachetStudents.Student.Add(studentobj);
-            ClassDataBase.DBZachetStudents.SaveChanges();
-            MessageBox.Show("Студент добавлен!", "Студент", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
-        }
+            else
+            {
+                Student studentobj = new Student()
+
+                {
+
+                    Name = Txb_NameStudent.Text,
+                    Specialization = Cmd_Specialization.SelectedItem as Specialization,
+                    Date = Dtp_Year.SelectedDate.Value,
+                    TrainingForm = Cmd_TrainingForm.SelectedItem as TrainingForm,
+                    Group = Cmd_NameGroup.SelectedItem as Group,
+                };
+
+                ClassDataBase.DBZachetStudents.Student.Add(studentobj);
+                ClassDataBase.DBZachetStudents.SaveChanges();
+                MessageBox.Show("Студент добавлен!", "Студент", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            } }
     }
 }

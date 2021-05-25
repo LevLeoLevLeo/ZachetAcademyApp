@@ -7,11 +7,15 @@ using ZachetAcademyApp.DataBase;
 
 namespace ZachetAcademyApp.Class
 {
+   
     class ClassDataBase
     {
-
+        
         public static ZachetStudentsEntities DBZachetStudents;
+        
         public static int obj;
+
+        public static string Studobj;
 
     }
 }

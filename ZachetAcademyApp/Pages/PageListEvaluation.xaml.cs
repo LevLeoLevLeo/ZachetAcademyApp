@@ -24,6 +24,8 @@ namespace ZachetAcademyApp.Pages
         public PageListEvaluation()
         {
             InitializeComponent();
+
+            Txt_NameStudent.Text = ClassDataBase.Studobj;
             ListEvaluation.ItemsSource = ClassDataBase.DBZachetStudents.Evaluation.Where(x => x.IdStudent == ClassDataBase.obj).ToList();
 
         }

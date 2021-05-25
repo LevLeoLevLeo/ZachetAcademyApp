@@ -6,9 +6,12 @@
       xmlns:local="clr-namespace:ZachetAcademyApp.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
-      Title="Главное окно">
+      Title="Главное окно"
+      WindowTitle="Главное окно">
 
     <Grid>
+
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="Электронный журнал" FontSize="30pt"/>
 
         <StackPanel Style="{StaticResource StpCenter}">
 
